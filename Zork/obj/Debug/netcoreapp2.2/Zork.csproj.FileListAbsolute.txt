@@ -1,0 +1,10 @@
+E:\ID Visual Studio\Zork\Zork\bin\Debug\netcoreapp2.2\Zork.deps.json
+E:\ID Visual Studio\Zork\Zork\bin\Debug\netcoreapp2.2\Zork.runtimeconfig.json
+E:\ID Visual Studio\Zork\Zork\bin\Debug\netcoreapp2.2\Zork.runtimeconfig.dev.json
+E:\ID Visual Studio\Zork\Zork\bin\Debug\netcoreapp2.2\Zork.dll
+E:\ID Visual Studio\Zork\Zork\bin\Debug\netcoreapp2.2\Zork.pdb
+E:\ID Visual Studio\Zork\Zork\obj\Debug\netcoreapp2.2\Zork.csproj.CoreCompileInputs.cache
+E:\ID Visual Studio\Zork\Zork\obj\Debug\netcoreapp2.2\Zork.AssemblyInfoInputs.cache
+E:\ID Visual Studio\Zork\Zork\obj\Debug\netcoreapp2.2\Zork.AssemblyInfo.cs
+E:\ID Visual Studio\Zork\Zork\obj\Debug\netcoreapp2.2\Zork.dll
+E:\ID Visual Studio\Zork\Zork\obj\Debug\netcoreapp2.2\Zork.pdb
