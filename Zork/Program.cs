@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Zork
 {
-    class Program
+    internal class Program
     {
-        private static string Location
+        private static string CurrentRoom
         {
             get
             {
-                return Rooms[LocationRow, LocationColumn];
+                return Rooms[Location.Row, Location.Column];
             }
         }
 
@@ -20,68 +21,62 @@ namespace Zork
             while (command != Commands.QUIT)
             {
 
-                Console.Write($"{Location}\n> ");
+                Console.Write($"{CurrentRoom}\n> ");
                 command = ToCommand(Console.ReadLine().Trim());
 
-                string outputString;
                 switch (command)
                 {
                     case Commands.QUIT:
-                        outputString = "Thank you for playing.";
+                        Console.WriteLine("Thank you for playing.");
                         break;
 
                     case Commands.LOOK:
-                        outputString = "This is an open field west of a white house, with a boarded front door." +
-                            "\nA rubber mat saying 'Welcome to Zork!' lies by the door.";
+                        Console.WriteLine("This is an open field west of a white house, with a boarded front door." +
+                            "\nA rubber mat saying 'Welcome to Zork!' lies by the door.");
                         break;
 
                     case Commands.NORTH:
                     case Commands.SOUTH:
                     case Commands.EAST:
                     case Commands.WEST:
-                        if (Move(command))
+                        if (Move(command) == false)
                         {
-                            outputString = $"You moved {command}.";
-                        }
-                        else
-                        {
-                            outputString = "The way is shut!";
+                            Console.WriteLine("The way is shut!");
                         }
                         break;
 
                     default:
-                        outputString = "Unrecognized command.";
+                        Console.WriteLine("Unknown command.");
                         break;
                 }
-
-                Console.WriteLine(outputString);
             }
         }
 
         private static bool Move(Commands command)
         {
-            bool didMove = false;
+            Assert.IsTrue(IsDirection(command), "Invalid direction");
+            bool didMove = true;
 
             switch (command)
             {
-                case Commands.NORTH when LocationRow > 0:
-                    LocationRow--;
-                    didMove = true;
+                case Commands.NORTH when Location.Row > 0:
+                    Location.Row--;
                     break;
 
-                case Commands.SOUTH when LocationRow < Rooms.GetLength(0) - 1:
-                    LocationRow++;
-                    didMove = true;
+                case Commands.SOUTH when Location.Row < Rooms.GetLength(0) - 1:
+                    Location.Row++;
                     break;
 
-                case Commands.EAST when LocationColumn < Rooms.GetLength(1) - 1:
-                    LocationColumn++;
-                    didMove = true;
+                case Commands.EAST when Location.Column < Rooms.GetLength(1) - 1:
+                    Location.Column++;
                     break;
 
-                case Commands.WEST when LocationColumn > 0:
-                    LocationColumn--;
-                    didMove = true;
+                case Commands.WEST when Location.Column > 0:
+                    Location.Column--;
+                    break;
+
+                default:
+                    didMove = false;
                     break;
             }
 
@@ -93,13 +88,23 @@ namespace Zork
             return Enum.TryParse(commandString, ignoreCase: true, out Commands command) ? command : Commands.UNKNOWN;
         }
 
+        private static bool IsDirection(Commands command) => Directions.Contains(command);
+
         private static string[,] Rooms = 
         {
             {"Dense Woods", "North of House", "Clearing" },
             {"Forest", "West of House", "Behind House" },
             {"Rocky Trail", "South of House", "Canyon View" }
         };
-        private static int LocationRow = 1;
-        private static int LocationColumn = 1;
+
+        private static readonly List<Commands> Directions = new List<Commands>
+        {
+            Commands.NORTH,
+            Commands.SOUTH,
+            Commands.EAST,
+            Commands.WEST
+        };
+
+        private static (int Row, int Column) Location = (1, 1);
     }
 }
