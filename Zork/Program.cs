@@ -31,8 +31,8 @@ namespace Zork
                         break;
 
                     case Commands.LOOK:
-                        Console.WriteLine("This is an open field west of a white house, with a boarded front door." +
-                            "\nA rubber mat saying 'Welcome to Zork!' lies by the door.");
+                        Console.WriteLine("This is an open field west of a white house, with a boarded front door.");
+                        Console.WriteLine("A rubber mat saying 'Welcome to Zork!' lies by the door.");
                         break;
 
                     case Commands.NORTH:
