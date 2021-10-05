@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Zork
 {
@@ -18,8 +19,8 @@ namespace Zork
         {
             Console.WriteLine("Welcome to Zork!");
 
-            const string roomDescriptionsFilename = "Rooms.txt";
-            InitializeRoomDescriptions(roomDescriptionsFilename);
+            const string roomsFilename = "Rooms.json";
+            InitializeRooms(roomsFilename);
 
             Room previousRoom = null;
             Commands command = Commands.UNKNOWN;
@@ -97,48 +98,15 @@ namespace Zork
             return Enum.TryParse(commandString, ignoreCase: true, out Commands command) ? command : Commands.UNKNOWN;
         }
 
-        private static void InitializeRoomDescriptions(string roomDescriptionsFilename)
-        {
-            const string delimiter = "##";
-            const int expectedFieldCount = 2;
+        private static void InitializeRooms(string roomsFilename) =>
+            Rooms = JsonConvert.DeserializeObject<Room[,]>(File.ReadAllText(roomsFilename));
 
-            string[] lines = File.ReadAllLines(roomDescriptionsFilename);
-            foreach (string line in lines)
-            {
-                string[] fields = line.Split(delimiter);
-                if (fields.Length != expectedFieldCount)
-                {
-                    throw new InvalidDataException("Invalid record.");
-                }
-
-                (string name, string description) = (fields[(int)Fields.Name], fields[(int)Fields.Description]);
-
-                RoomMap[name].Description = description;
-            }
-        }
-
-        private static readonly Room[,] Rooms = 
-        {
-            { new Room("Dense Woods"), new Room("North of House"), new Room("Clearing") },
-            { new Room("Forest"), new Room("West of House"), new Room("Behind House") },
-            { new Room("Rocky Trail"), new Room("South of House"), new Room("Canyon View") }
-        };
+        private static Room[,] Rooms;
 
         private enum Fields
         {
             Name = 0,
             Description
-        }
-
-        private static readonly Dictionary<string, Room> RoomMap;
-
-        static Program()
-        {
-            RoomMap = new Dictionary<string, Room>();
-            foreach(Room room in Rooms)
-            {
-                RoomMap.Add(room.Name, room);
-            }
         }
 
         private static (int Row, int Column) Location = (1, 1);
