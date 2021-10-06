@@ -44,6 +44,7 @@ namespace Zork
 
                     case Commands.LOOK:
                         Console.WriteLine(Player.Location.Description);
+                        Player.Moves++;
                         break;
 
                     case Commands.NORTH:
@@ -55,6 +56,17 @@ namespace Zork
                         {
                             Console.WriteLine("The way is shut!");
                         }
+                        Player.Moves++;
+                        break;
+
+                    case Commands.SCORE:
+                        Console.WriteLine($"Your score would be {Player.Score}, in {Player.Moves} move(s).");
+                        Player.Moves++;
+                        break;
+
+                    case Commands.REWARD:
+                        Player.Score += 1;
+                        Player.Moves++;
                         break;
 
                     default:
