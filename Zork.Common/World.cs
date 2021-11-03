@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Zork
 {
-    public class World
+    public class World : INotifyPropertyChanged
     {
-        public HashSet<Room> Rooms { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public List<Room> Rooms { get; set; }
 
         [JsonIgnore]
-        public IReadOnlyDictionary<string, Room> RoomsByName => mRoomsByName;
+        public Dictionary<string, Room> RoomsByName => mRoomsByName;
 
         public Player SpawnPlayer() => new Player(this, StartingLocation);
 

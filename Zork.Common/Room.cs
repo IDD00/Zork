@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace Zork
 {
-    public class Room : IEquatable<Room>
+    public class Room : IEquatable<Room>, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         [JsonProperty(Order = 1)]
         public string Name { get; private set; }
 
@@ -17,7 +20,7 @@ namespace Zork
         private Dictionary<Directions, string> NeighborNames { get; set; }
 
         [JsonIgnore]
-        public IReadOnlyDictionary<Directions, Room> Neighbors { get; private set; }
+        public Dictionary<Directions, Room> Neighbors { get; private set; }
 
         public static bool operator ==(Room lhs, Room rhs)
         {
@@ -49,5 +52,12 @@ namespace Zork
                                                                  where room != null
                                                                  select (Direction: entry.Key, Room: room))
                                                                  .ToDictionary(pair => pair.Direction, pair => pair.Room);
+
+        /*
+         * public void UpdateNeighbors(World world)
+         * {
+         * 
+         * }
+         */
     }
 }
