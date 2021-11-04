@@ -7,6 +7,18 @@ namespace Zork.Builder.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string Filename
+        {
+            get => _filename;
+            set
+            {
+                if (_filename != value)
+                {
+                    _filename = value;
+                }
+            }
+        }
+
         public BindingList<Room> Rooms { get; set; }
 
         public Game Game
@@ -31,5 +43,6 @@ namespace Zork.Builder.ViewModels
         }
 
         private Game _game;
+        private string _filename;
     }
 }
