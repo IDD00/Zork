@@ -10,6 +10,11 @@ namespace Zork
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public Room(string roomName)
+        {
+            Name = roomName;
+        }
+
         [JsonProperty(Order = 1)]
         public string Name { get; private set; }
 

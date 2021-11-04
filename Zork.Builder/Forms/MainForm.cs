@@ -44,5 +44,17 @@ namespace Zork.Builder
                 ViewModel.Game = JsonConvert.DeserializeObject<Game>(File.ReadAllText(openFileDialog.FileName));
             }
         }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            using (AddRoomForm addRoomForm = new AddRoomForm())
+            {
+                if (addRoomForm.ShowDialog() == DialogResult.OK)
+                {
+                    Room room = new Room(addRoomForm.RoomName);
+                    ViewModel.Rooms.Add(room);
+                }
+            }
+        }
     }
 }

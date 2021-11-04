@@ -36,21 +36,24 @@ namespace Zork.Builder
             this.mainFormMenuStrip = new System.Windows.Forms.MenuStrip();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.worldTabPage = new System.Windows.Forms.TabPage();
+            this.roomsInfoGroupBox = new System.Windows.Forms.GroupBox();
+            this.roomNameLabel = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.roomsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gameViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.roomsListBoxLabel = new System.Windows.Forms.Label();
-            this.roomDescriptionLabel = new System.Windows.Forms.Label();
-            this.deleteButton = new System.Windows.Forms.Button();
-            this.addButton = new System.Windows.Forms.Button();
             this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.roomDescriptionLabel = new System.Windows.Forms.Label();
+            this.roomsGroupBox = new System.Windows.Forms.GroupBox();
             this.roomsListBox = new System.Windows.Forms.ListBox();
-            this.roomNameLabel = new System.Windows.Forms.Label();
+            this.addButton = new System.Windows.Forms.Button();
+            this.deleteButton = new System.Windows.Forms.Button();
             this.mainFormTabControl = new System.Windows.Forms.TabControl();
             this.mainFormMenuStrip.SuspendLayout();
             this.worldTabPage.SuspendLayout();
+            this.roomsInfoGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.roomsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameViewModelBindingSource)).BeginInit();
+            this.roomsGroupBox.SuspendLayout();
             this.mainFormTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,7 +64,7 @@ namespace Zork.Builder
             this.openToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Text = "&File";
             // 
             // newToolStripMenuItem
             // 
@@ -94,14 +97,8 @@ namespace Zork.Builder
             // 
             // worldTabPage
             // 
-            this.worldTabPage.Controls.Add(this.descriptionTextBox);
-            this.worldTabPage.Controls.Add(this.roomsListBoxLabel);
-            this.worldTabPage.Controls.Add(this.roomDescriptionLabel);
-            this.worldTabPage.Controls.Add(this.deleteButton);
-            this.worldTabPage.Controls.Add(this.addButton);
-            this.worldTabPage.Controls.Add(this.nameTextBox);
-            this.worldTabPage.Controls.Add(this.roomsListBox);
-            this.worldTabPage.Controls.Add(this.roomNameLabel);
+            this.worldTabPage.Controls.Add(this.roomsInfoGroupBox);
+            this.worldTabPage.Controls.Add(this.roomsGroupBox);
             this.worldTabPage.Location = new System.Drawing.Point(4, 25);
             this.worldTabPage.Name = "worldTabPage";
             this.worldTabPage.Size = new System.Drawing.Size(600, 581);
@@ -109,11 +106,32 @@ namespace Zork.Builder
             this.worldTabPage.Text = "World";
             this.worldTabPage.UseVisualStyleBackColor = true;
             // 
+            // roomsInfoGroupBox
+            // 
+            this.roomsInfoGroupBox.Controls.Add(this.roomNameLabel);
+            this.roomsInfoGroupBox.Controls.Add(this.descriptionTextBox);
+            this.roomsInfoGroupBox.Controls.Add(this.nameTextBox);
+            this.roomsInfoGroupBox.Controls.Add(this.roomDescriptionLabel);
+            this.roomsInfoGroupBox.Location = new System.Drawing.Point(209, 3);
+            this.roomsInfoGroupBox.Name = "roomsInfoGroupBox";
+            this.roomsInfoGroupBox.Size = new System.Drawing.Size(388, 496);
+            this.roomsInfoGroupBox.TabIndex = 1;
+            this.roomsInfoGroupBox.TabStop = false;
+            // 
+            // roomNameLabel
+            // 
+            this.roomNameLabel.AutoSize = true;
+            this.roomNameLabel.Location = new System.Drawing.Point(6, 23);
+            this.roomNameLabel.Name = "roomNameLabel";
+            this.roomNameLabel.Size = new System.Drawing.Size(49, 17);
+            this.roomNameLabel.TabIndex = 0;
+            this.roomNameLabel.Text = "&Name:";
+            // 
             // descriptionTextBox
             // 
             this.descriptionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.descriptionTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.roomsBindingSource, "Description", true));
-            this.descriptionTextBox.Location = new System.Drawing.Point(288, 45);
+            this.descriptionTextBox.Location = new System.Drawing.Point(9, 101);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.Size = new System.Drawing.Size(300, 60);
@@ -128,50 +146,35 @@ namespace Zork.Builder
             // 
             this.gameViewModelBindingSource.DataSource = typeof(Zork.Builder.ViewModels.GameViewModel);
             // 
-            // roomsListBoxLabel
-            // 
-            this.roomsListBoxLabel.AutoSize = true;
-            this.roomsListBoxLabel.Location = new System.Drawing.Point(3, 12);
-            this.roomsListBoxLabel.Name = "roomsListBoxLabel";
-            this.roomsListBoxLabel.Size = new System.Drawing.Size(56, 17);
-            this.roomsListBoxLabel.TabIndex = 3;
-            this.roomsListBoxLabel.Text = "Rooms:";
-            // 
-            // roomDescriptionLabel
-            // 
-            this.roomDescriptionLabel.AutoSize = true;
-            this.roomDescriptionLabel.Location = new System.Drawing.Point(195, 48);
-            this.roomDescriptionLabel.Name = "roomDescriptionLabel";
-            this.roomDescriptionLabel.Size = new System.Drawing.Size(83, 17);
-            this.roomDescriptionLabel.TabIndex = 2;
-            this.roomDescriptionLabel.Text = "Description:";
-            // 
-            // deleteButton
-            // 
-            this.deleteButton.Location = new System.Drawing.Point(104, 539);
-            this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(75, 25);
-            this.deleteButton.TabIndex = 2;
-            this.deleteButton.Text = "&Delete";
-            this.deleteButton.UseVisualStyleBackColor = true;
-            // 
-            // addButton
-            // 
-            this.addButton.Location = new System.Drawing.Point(19, 539);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 25);
-            this.addButton.TabIndex = 1;
-            this.addButton.Text = "&Add...";
-            this.addButton.UseVisualStyleBackColor = true;
-            // 
             // nameTextBox
             // 
             this.nameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.roomsBindingSource, "Name", true));
-            this.nameTextBox.Location = new System.Drawing.Point(288, 12);
+            this.nameTextBox.Location = new System.Drawing.Point(9, 43);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(300, 22);
             this.nameTextBox.TabIndex = 1;
+            // 
+            // roomDescriptionLabel
+            // 
+            this.roomDescriptionLabel.AutoSize = true;
+            this.roomDescriptionLabel.Location = new System.Drawing.Point(6, 81);
+            this.roomDescriptionLabel.Name = "roomDescriptionLabel";
+            this.roomDescriptionLabel.Size = new System.Drawing.Size(83, 17);
+            this.roomDescriptionLabel.TabIndex = 2;
+            this.roomDescriptionLabel.Text = "&Description:";
+            // 
+            // roomsGroupBox
+            // 
+            this.roomsGroupBox.Controls.Add(this.roomsListBox);
+            this.roomsGroupBox.Controls.Add(this.addButton);
+            this.roomsGroupBox.Controls.Add(this.deleteButton);
+            this.roomsGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.roomsGroupBox.Name = "roomsGroupBox";
+            this.roomsGroupBox.Size = new System.Drawing.Size(200, 496);
+            this.roomsGroupBox.TabIndex = 0;
+            this.roomsGroupBox.TabStop = false;
+            this.roomsGroupBox.Text = "Rooms";
             // 
             // roomsListBox
             // 
@@ -179,20 +182,30 @@ namespace Zork.Builder
             this.roomsListBox.DisplayMember = "Name";
             this.roomsListBox.FormattingEnabled = true;
             this.roomsListBox.ItemHeight = 16;
-            this.roomsListBox.Location = new System.Drawing.Point(19, 33);
+            this.roomsListBox.Location = new System.Drawing.Point(17, 21);
             this.roomsListBox.Name = "roomsListBox";
-            this.roomsListBox.Size = new System.Drawing.Size(160, 500);
-            this.roomsListBox.TabIndex = 1;
+            this.roomsListBox.Size = new System.Drawing.Size(160, 436);
+            this.roomsListBox.TabIndex = 0;
             this.roomsListBox.ValueMember = "Description";
             // 
-            // roomNameLabel
+            // addButton
             // 
-            this.roomNameLabel.AutoSize = true;
-            this.roomNameLabel.Location = new System.Drawing.Point(195, 12);
-            this.roomNameLabel.Name = "roomNameLabel";
-            this.roomNameLabel.Size = new System.Drawing.Size(49, 17);
-            this.roomNameLabel.TabIndex = 0;
-            this.roomNameLabel.Text = "Name:";
+            this.addButton.Location = new System.Drawing.Point(17, 463);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(75, 25);
+            this.addButton.TabIndex = 1;
+            this.addButton.Text = "&Add...";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(102, 463);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(75, 25);
+            this.deleteButton.TabIndex = 2;
+            this.deleteButton.Text = "&Delete";
+            this.deleteButton.UseVisualStyleBackColor = true;
             // 
             // mainFormTabControl
             // 
@@ -201,7 +214,7 @@ namespace Zork.Builder
             this.mainFormTabControl.Name = "mainFormTabControl";
             this.mainFormTabControl.SelectedIndex = 0;
             this.mainFormTabControl.Size = new System.Drawing.Size(608, 610);
-            this.mainFormTabControl.TabIndex = 0;
+            this.mainFormTabControl.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -217,9 +230,11 @@ namespace Zork.Builder
             this.mainFormMenuStrip.ResumeLayout(false);
             this.mainFormMenuStrip.PerformLayout();
             this.worldTabPage.ResumeLayout(false);
-            this.worldTabPage.PerformLayout();
+            this.roomsInfoGroupBox.ResumeLayout(false);
+            this.roomsInfoGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.roomsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameViewModelBindingSource)).EndInit();
+            this.roomsGroupBox.ResumeLayout(false);
             this.mainFormTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -233,17 +248,18 @@ namespace Zork.Builder
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.TabPage worldTabPage;
-        private System.Windows.Forms.Label roomsListBoxLabel;
         private System.Windows.Forms.Button deleteButton;
-        private System.Windows.Forms.TextBox descriptionTextBox;
-        private System.Windows.Forms.Label roomDescriptionLabel;
-        private System.Windows.Forms.TextBox nameTextBox;
-        private System.Windows.Forms.Label roomNameLabel;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.ListBox roomsListBox;
         private System.Windows.Forms.TabControl mainFormTabControl;
         private System.Windows.Forms.BindingSource gameViewModelBindingSource;
         private System.Windows.Forms.BindingSource roomsBindingSource;
+        private System.Windows.Forms.GroupBox roomsGroupBox;
+        private System.Windows.Forms.GroupBox roomsInfoGroupBox;
+        private System.Windows.Forms.Label roomNameLabel;
+        private System.Windows.Forms.TextBox descriptionTextBox;
+        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.Label roomDescriptionLabel;
     }
 }
 
