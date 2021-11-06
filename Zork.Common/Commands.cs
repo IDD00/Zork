@@ -8,6 +8,8 @@
         SOUTH,
         EAST,
         WEST,
+        UP,
+        DOWN,
         SCORE,
         REWARD,
         UNKNOWN

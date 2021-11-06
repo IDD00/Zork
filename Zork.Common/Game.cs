@@ -54,6 +54,8 @@ namespace Zork
                     case Commands.SOUTH:
                     case Commands.EAST:
                     case Commands.WEST:
+                    case Commands.UP:
+                    case Commands.DOWN:
                         Directions direction = (Directions)command;
                         if (Player.Move(direction) == false)
                         {

@@ -32,13 +32,15 @@ namespace Zork.Builder
             }
         }
 
-        private bool IsWorldLoaded
+        private bool IsGameLoaded
         {
-            get => _isWorldLoaded; 
+            get => _isGameLoaded; 
             set
             {
-                _isWorldLoaded = value;
-                mainFormTabControl.Enabled = _isWorldLoaded;
+                _isGameLoaded = value;
+                mainFormTabControl.Enabled = _isGameLoaded;
+                saveToolStripMenuItem.Enabled = _isGameLoaded;
+                saveAsToolStripMenuItem.Enabled = _isGameLoaded;
             }
         }
 
@@ -46,7 +48,17 @@ namespace Zork.Builder
         {
             InitializeComponent();
             ViewModel = new GameViewModel();
-            IsWorldLoaded = false;
+            IsGameLoaded = false;
+
+            _roomNeighborControlMap = new Dictionary<Directions, RoomNeighborControl>
+            {
+                {Directions.NORTH, northRoomNeighborControl }
+                //{Directions.SOUTH, southRoomNeighborControl },
+                //{Directions.EAST, eastRoomNeighborControl },
+                //{Directions.WEST, westRoomNeighborControl },
+                //{Directions.UP, upRoomNeighborControl },
+                //{Directions.DOWN, downRoomNeighborControl }
+            };
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -54,7 +66,16 @@ namespace Zork.Builder
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ViewModel.Game = JsonConvert.DeserializeObject<Game>(File.ReadAllText(openFileDialog.FileName));
-                IsWorldLoaded = true;
+                ViewModel.Filename = openFileDialog.FileName;
+
+                Room selectedRoom = roomsListBox.SelectedItem as Room;
+                foreach (var control in _roomNeighborControlMap.Values)
+                {
+                    control.Rooms = new List<Room>(ViewModel.Rooms);
+                    control.Room = selectedRoom;
+                }
+
+                IsGameLoaded = true;
             }
         }
 
@@ -75,7 +96,6 @@ namespace Zork.Builder
             if (MessageBox.Show("Delete this room?", AssemblyTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 ViewModel.Rooms.Remove((Room)roomsListBox.SelectedItem);
-                ViewModel.Filename = openFileDialog.FileName;
                 roomsListBox.SelectedItem = ViewModel.Rooms.FirstOrDefault();
             }
         }
@@ -83,6 +103,12 @@ namespace Zork.Builder
         private void roomsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             deleteButton.Enabled = roomsListBox.SelectedItem != null;
+            Room selectedRoom = roomsListBox.SelectedItem as Room;
+            foreach (var control in _roomNeighborControlMap.Values)
+            {
+                control.Rooms = new List<Room>(ViewModel.Rooms);
+                control.Room = selectedRoom;
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,6 +149,7 @@ namespace Zork.Builder
         }
 
         private GameViewModel _viewModel;
-        private bool _isWorldLoaded;
+        private bool _isGameLoaded;
+        private readonly Dictionary<Directions, RoomNeighborControl> _roomNeighborControlMap;
     }
 }

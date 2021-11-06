@@ -57,9 +57,11 @@ namespace Zork.Builder
             this.deleteButton = new System.Windows.Forms.Button();
             this.mainFormTabControl = new System.Windows.Forms.TabControl();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.northRoomNeighborControl = new Zork.RoomNeighborControl();
             this.mainFormMenuStrip.SuspendLayout();
             this.worldTabPage.SuspendLayout();
             this.roomsInfoGroupBox.SuspendLayout();
+            this.roomNeighborsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.roomsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameViewModelBindingSource)).BeginInit();
             this.roomsGroupBox.SuspendLayout();
@@ -188,6 +190,7 @@ namespace Zork.Builder
             // 
             // roomNeighborsGroupBox
             // 
+            this.roomNeighborsGroupBox.Controls.Add(this.northRoomNeighborControl);
             this.roomNeighborsGroupBox.Location = new System.Drawing.Point(6, 167);
             this.roomNeighborsGroupBox.Name = "roomNeighborsGroupBox";
             this.roomNeighborsGroupBox.Size = new System.Drawing.Size(388, 321);
@@ -300,6 +303,16 @@ namespace Zork.Builder
             this.saveFileDialog.Filter = "Game files|*.json";
             this.saveFileDialog.Title = "Save Game File";
             // 
+            // northRoomNeighborControl
+            // 
+            this.northRoomNeighborControl.AssignedNeighbor = null;
+            this.northRoomNeighborControl.Direction = Zork.Directions.NORTH;
+            this.northRoomNeighborControl.Location = new System.Drawing.Point(41, 51);
+            this.northRoomNeighborControl.Name = "northRoomNeighborControl";
+            this.northRoomNeighborControl.Room = null;
+            this.northRoomNeighborControl.Size = new System.Drawing.Size(150, 60);
+            this.northRoomNeighborControl.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -317,6 +330,7 @@ namespace Zork.Builder
             this.worldTabPage.PerformLayout();
             this.roomsInfoGroupBox.ResumeLayout(false);
             this.roomsInfoGroupBox.PerformLayout();
+            this.roomNeighborsGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.roomsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameViewModelBindingSource)).EndInit();
             this.roomsGroupBox.ResumeLayout(false);
@@ -337,8 +351,6 @@ namespace Zork.Builder
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.ListBox roomsListBox;
         private System.Windows.Forms.TabControl mainFormTabControl;
-        private System.Windows.Forms.BindingSource gameViewModelBindingSource;
-        private System.Windows.Forms.BindingSource roomsBindingSource;
         private System.Windows.Forms.GroupBox roomsGroupBox;
         private System.Windows.Forms.GroupBox roomsInfoGroupBox;
         private System.Windows.Forms.Label roomNameLabel;
@@ -354,6 +366,9 @@ namespace Zork.Builder
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.BindingSource gameViewModelBindingSource;
+        private System.Windows.Forms.BindingSource roomsBindingSource;
+        private RoomNeighborControl northRoomNeighborControl;
     }
 }
 
