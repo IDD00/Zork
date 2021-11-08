@@ -13,6 +13,7 @@ namespace Zork
         public Room(string roomName)
         {
             Name = roomName;
+            Neighbors = new Dictionary<Directions, Room>();
         }
 
         [JsonProperty(Order = 1)]

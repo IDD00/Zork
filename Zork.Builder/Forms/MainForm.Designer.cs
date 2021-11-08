@@ -45,6 +45,7 @@ namespace Zork.Builder
             this.startLocationLabel = new System.Windows.Forms.Label();
             this.roomsInfoGroupBox = new System.Windows.Forms.GroupBox();
             this.roomNeighborsGroupBox = new System.Windows.Forms.GroupBox();
+            this.northRoomNeighborControl = new Zork.RoomNeighborControl();
             this.roomNameLabel = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.roomsBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -57,7 +58,11 @@ namespace Zork.Builder
             this.deleteButton = new System.Windows.Forms.Button();
             this.mainFormTabControl = new System.Windows.Forms.TabControl();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.northRoomNeighborControl = new Zork.RoomNeighborControl();
+            this.southRoomNeighborControl = new Zork.RoomNeighborControl();
+            this.westRoomNeighborControl = new Zork.RoomNeighborControl();
+            this.eastRoomNeighborControl = new Zork.RoomNeighborControl();
+            this.downRoomNeighborControl = new Zork.RoomNeighborControl();
+            this.upRoomNeighborControl = new Zork.RoomNeighborControl();
             this.mainFormMenuStrip.SuspendLayout();
             this.worldTabPage.SuspendLayout();
             this.roomsInfoGroupBox.SuspendLayout();
@@ -160,6 +165,7 @@ namespace Zork.Builder
             // 
             // startLocationComboBox
             // 
+            this.startLocationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.startLocationComboBox.FormattingEnabled = true;
             this.startLocationComboBox.Location = new System.Drawing.Point(11, 32);
             this.startLocationComboBox.Name = "startLocationComboBox";
@@ -190,6 +196,11 @@ namespace Zork.Builder
             // 
             // roomNeighborsGroupBox
             // 
+            this.roomNeighborsGroupBox.Controls.Add(this.downRoomNeighborControl);
+            this.roomNeighborsGroupBox.Controls.Add(this.upRoomNeighborControl);
+            this.roomNeighborsGroupBox.Controls.Add(this.westRoomNeighborControl);
+            this.roomNeighborsGroupBox.Controls.Add(this.eastRoomNeighborControl);
+            this.roomNeighborsGroupBox.Controls.Add(this.southRoomNeighborControl);
             this.roomNeighborsGroupBox.Controls.Add(this.northRoomNeighborControl);
             this.roomNeighborsGroupBox.Location = new System.Drawing.Point(6, 167);
             this.roomNeighborsGroupBox.Name = "roomNeighborsGroupBox";
@@ -197,6 +208,17 @@ namespace Zork.Builder
             this.roomNeighborsGroupBox.TabIndex = 4;
             this.roomNeighborsGroupBox.TabStop = false;
             this.roomNeighborsGroupBox.Text = "Neighbors";
+            // 
+            // northRoomNeighborControl
+            // 
+            this.northRoomNeighborControl.AssignedNeighbor = null;
+            this.northRoomNeighborControl.Direction = Zork.Directions.NORTH;
+            this.northRoomNeighborControl.Location = new System.Drawing.Point(32, 35);
+            this.northRoomNeighborControl.Name = "northRoomNeighborControl";
+            this.northRoomNeighborControl.Room = null;
+            this.northRoomNeighborControl.Rooms = null;
+            this.northRoomNeighborControl.Size = new System.Drawing.Size(150, 60);
+            this.northRoomNeighborControl.TabIndex = 0;
             // 
             // roomNameLabel
             // 
@@ -214,7 +236,7 @@ namespace Zork.Builder
             this.descriptionTextBox.Location = new System.Drawing.Point(9, 99);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(300, 60);
+            this.descriptionTextBox.Size = new System.Drawing.Size(347, 60);
             this.descriptionTextBox.TabIndex = 3;
             // 
             // roomsBindingSource
@@ -303,15 +325,60 @@ namespace Zork.Builder
             this.saveFileDialog.Filter = "Game files|*.json";
             this.saveFileDialog.Title = "Save Game File";
             // 
-            // northRoomNeighborControl
+            // southRoomNeighborControl
             // 
-            this.northRoomNeighborControl.AssignedNeighbor = null;
-            this.northRoomNeighborControl.Direction = Zork.Directions.NORTH;
-            this.northRoomNeighborControl.Location = new System.Drawing.Point(41, 51);
-            this.northRoomNeighborControl.Name = "northRoomNeighborControl";
-            this.northRoomNeighborControl.Room = null;
-            this.northRoomNeighborControl.Size = new System.Drawing.Size(150, 60);
-            this.northRoomNeighborControl.TabIndex = 0;
+            this.southRoomNeighborControl.AssignedNeighbor = null;
+            this.southRoomNeighborControl.Direction = Zork.Directions.SOUTH;
+            this.southRoomNeighborControl.Location = new System.Drawing.Point(200, 35);
+            this.southRoomNeighborControl.Name = "southRoomNeighborControl";
+            this.southRoomNeighborControl.Room = null;
+            this.southRoomNeighborControl.Rooms = null;
+            this.southRoomNeighborControl.Size = new System.Drawing.Size(150, 60);
+            this.southRoomNeighborControl.TabIndex = 1;
+            // 
+            // westRoomNeighborControl
+            // 
+            this.westRoomNeighborControl.AssignedNeighbor = null;
+            this.westRoomNeighborControl.Direction = Zork.Directions.WEST;
+            this.westRoomNeighborControl.Location = new System.Drawing.Point(200, 121);
+            this.westRoomNeighborControl.Name = "westRoomNeighborControl";
+            this.westRoomNeighborControl.Room = null;
+            this.westRoomNeighborControl.Rooms = null;
+            this.westRoomNeighborControl.Size = new System.Drawing.Size(150, 60);
+            this.westRoomNeighborControl.TabIndex = 3;
+            // 
+            // eastRoomNeighborControl
+            // 
+            this.eastRoomNeighborControl.AssignedNeighbor = null;
+            this.eastRoomNeighborControl.Direction = Zork.Directions.EAST;
+            this.eastRoomNeighborControl.Location = new System.Drawing.Point(32, 121);
+            this.eastRoomNeighborControl.Name = "eastRoomNeighborControl";
+            this.eastRoomNeighborControl.Room = null;
+            this.eastRoomNeighborControl.Rooms = null;
+            this.eastRoomNeighborControl.Size = new System.Drawing.Size(150, 60);
+            this.eastRoomNeighborControl.TabIndex = 2;
+            // 
+            // downRoomNeighborControl
+            // 
+            this.downRoomNeighborControl.AssignedNeighbor = null;
+            this.downRoomNeighborControl.Direction = Zork.Directions.DOWN;
+            this.downRoomNeighborControl.Location = new System.Drawing.Point(200, 206);
+            this.downRoomNeighborControl.Name = "downRoomNeighborControl";
+            this.downRoomNeighborControl.Room = null;
+            this.downRoomNeighborControl.Rooms = null;
+            this.downRoomNeighborControl.Size = new System.Drawing.Size(150, 60);
+            this.downRoomNeighborControl.TabIndex = 5;
+            // 
+            // upRoomNeighborControl
+            // 
+            this.upRoomNeighborControl.AssignedNeighbor = null;
+            this.upRoomNeighborControl.Direction = Zork.Directions.UP;
+            this.upRoomNeighborControl.Location = new System.Drawing.Point(32, 206);
+            this.upRoomNeighborControl.Name = "upRoomNeighborControl";
+            this.upRoomNeighborControl.Room = null;
+            this.upRoomNeighborControl.Rooms = null;
+            this.upRoomNeighborControl.Size = new System.Drawing.Size(150, 60);
+            this.upRoomNeighborControl.TabIndex = 4;
             // 
             // MainForm
             // 
@@ -369,6 +436,11 @@ namespace Zork.Builder
         private System.Windows.Forms.BindingSource gameViewModelBindingSource;
         private System.Windows.Forms.BindingSource roomsBindingSource;
         private RoomNeighborControl northRoomNeighborControl;
+        private RoomNeighborControl downRoomNeighborControl;
+        private RoomNeighborControl upRoomNeighborControl;
+        private RoomNeighborControl westRoomNeighborControl;
+        private RoomNeighborControl eastRoomNeighborControl;
+        private RoomNeighborControl southRoomNeighborControl;
     }
 }
 

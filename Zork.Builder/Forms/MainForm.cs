@@ -52,12 +52,12 @@ namespace Zork.Builder
 
             _roomNeighborControlMap = new Dictionary<Directions, RoomNeighborControl>
             {
-                {Directions.NORTH, northRoomNeighborControl }
-                //{Directions.SOUTH, southRoomNeighborControl },
-                //{Directions.EAST, eastRoomNeighborControl },
-                //{Directions.WEST, westRoomNeighborControl },
-                //{Directions.UP, upRoomNeighborControl },
-                //{Directions.DOWN, downRoomNeighborControl }
+                {Directions.NORTH, northRoomNeighborControl },
+                {Directions.SOUTH, southRoomNeighborControl },
+                {Directions.EAST, eastRoomNeighborControl },
+                {Directions.WEST, westRoomNeighborControl },
+                {Directions.UP, upRoomNeighborControl },
+                {Directions.DOWN, downRoomNeighborControl }
             };
         }
 

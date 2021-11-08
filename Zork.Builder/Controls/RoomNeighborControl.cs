@@ -27,6 +27,8 @@ namespace Zork
                         var rooms = new List<Room>(Rooms);
                         rooms.Remove(_room);
                         rooms.Insert(0, NoNeighbor);
+
+                        roomNeighborComboBox.SelectedIndexChanged -= roomNeighborComboBox_SelectedIndexChanged;
                         roomNeighborComboBox.DataSource = rooms;
 
                         if (_room.Neighbors.TryGetValue(Direction, out Room neighbor))
@@ -37,6 +39,8 @@ namespace Zork
                         {
                             AssignedNeighbor = NoNeighbor;
                         }
+
+                        roomNeighborComboBox.SelectedIndexChanged += roomNeighborComboBox_SelectedIndexChanged;
                     }
                     else
                     {
@@ -66,6 +70,21 @@ namespace Zork
         {
             InitializeComponent();
         }
+        private void roomNeighborComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_room != null)
+            {
+                Room assignedNeighbor = AssignedNeighbor;
+                if (assignedNeighbor == NoNeighbor)
+                {
+                    _room.Neighbors.Remove(Direction);
+                }
+                else
+                {
+                    _room.Neighbors[Direction] = assignedNeighbor;
+                }
+            }
+        }
 
         public List<Room> Rooms { get; set; }
 
@@ -73,5 +92,6 @@ namespace Zork
 
         private Directions _direction;
         private Room _room;
+
     }
 }
