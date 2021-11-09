@@ -13,6 +13,7 @@ namespace Zork
         public Room(string roomName)
         {
             Name = roomName;
+            Description = "[Insert Description Here]";
         }
 
         [JsonProperty(Order = 1)]
