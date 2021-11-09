@@ -10,10 +10,8 @@ using System.Windows.Forms;
 
 namespace Zork
 {
-    public partial class RoomNeighborControl : UserControl, INotifyPropertyChanged
+    public partial class RoomNeighborControl : UserControl
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public Room Room
         {
             get => _room;
@@ -28,19 +26,28 @@ namespace Zork
                         rooms.Remove(_room);
                         rooms.Insert(0, NoNeighbor);
 
-                        roomNeighborComboBox.SelectedIndexChanged -= roomNeighborComboBox_SelectedIndexChanged;
+                        roomNeighborComboBox.SelectedIndexChanged -= RoomNeighborComboBox_SelectedIndexChanged;
                         roomNeighborComboBox.DataSource = rooms;
 
-                        if (_room.Neighbors.TryGetValue(Direction, out Room neighbor))
+                        if (_room.Neighbors != null)
                         {
-                            AssignedNeighbor = neighbor;
+                            if (_room.Neighbors.TryGetValue(Direction, out Room neighbor))
+                            {
+                                AssignedNeighbor = neighbor;
+                            }
+                            else
+                            {
+                                AssignedNeighbor = NoNeighbor;
+                            }
                         }
                         else
                         {
-                            AssignedNeighbor = NoNeighbor;
+                            _room.NeighborNames = new Dictionary<Directions, string>();
+                            _room.Neighbors = new Dictionary<Directions, Room>();
                         }
+                        
 
-                        roomNeighborComboBox.SelectedIndexChanged += roomNeighborComboBox_SelectedIndexChanged;
+                        roomNeighborComboBox.SelectedIndexChanged += RoomNeighborComboBox_SelectedIndexChanged;
                     }
                     else
                     {
@@ -70,7 +77,7 @@ namespace Zork
         {
             InitializeComponent();
         }
-        private void roomNeighborComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void RoomNeighborComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_room != null)
             {
@@ -78,15 +85,48 @@ namespace Zork
                 if (assignedNeighbor == NoNeighbor)
                 {
                     _room.Neighbors.Remove(Direction);
+                    _room.NeighborNames.Remove(Direction);
                 }
                 else
                 {
-                    _room.Neighbors[Direction] = assignedNeighbor;
+                    if (_room.Neighbors != null)
+                    {
+                        _room.Neighbors[Direction] = assignedNeighbor;
+                        _room.NeighborNames[Direction] = assignedNeighbor.Name;
+                    }
+                    else
+                    {
+                        _room.Neighbors.Add(Direction, assignedNeighbor);
+                        _room.NeighborNames.Add(Direction, assignedNeighbor.Name);
+                    }
                 }
             }
         }
 
-        public List<Room> Rooms { get; set; }
+        public BindingList<Room> Rooms { get; set; }
+
+        public Game Game
+        {
+            get => _game;
+            set
+            {
+                if (_game != value)
+                {
+                    _game = value;
+
+                    if (_game != null)
+                    {
+                        Rooms = new BindingList<Room>(_game.World.Rooms);
+                    }
+                    else
+                    {
+                        Rooms = new BindingList<Room>(Array.Empty<Room>());
+                    }
+                }
+            }
+        }
+
+        private Game _game;
 
         private static readonly Room NoNeighbor = new Room("None");
 

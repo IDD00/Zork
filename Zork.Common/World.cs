@@ -10,6 +10,11 @@ namespace Zork
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public World()
+        {
+            Rooms = new List<Room>();
+        }
+
         public List<Room> Rooms { get; set; }
 
         [JsonIgnore]
@@ -29,7 +34,7 @@ namespace Zork
         }
 
         [JsonProperty]
-        private string StartingLocation { get; set; }
+        public string StartingLocation { get; set; }
 
         private Dictionary<string, Room> mRoomsByName;
     }

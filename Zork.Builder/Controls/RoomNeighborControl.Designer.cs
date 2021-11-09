@@ -50,7 +50,7 @@
             this.roomNeighborComboBox.Name = "roomNeighborComboBox";
             this.roomNeighborComboBox.Size = new System.Drawing.Size(143, 24);
             this.roomNeighborComboBox.TabIndex = 1;
-            this.roomNeighborComboBox.SelectedIndexChanged += new System.EventHandler(this.roomNeighborComboBox_SelectedIndexChanged);
+            this.roomNeighborComboBox.SelectedIndexChanged += new System.EventHandler(this.RoomNeighborComboBox_SelectedIndexChanged);
             // 
             // RoomNeighborControl
             // 

@@ -61,7 +61,7 @@ namespace Zork.Builder
             };
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -71,7 +71,7 @@ namespace Zork.Builder
                 Room selectedRoom = roomsListBox.SelectedItem as Room;
                 foreach (var control in _roomNeighborControlMap.Values)
                 {
-                    control.Rooms = new List<Room>(ViewModel.Rooms);
+                    control.Game = ViewModel.Game;
                     control.Room = selectedRoom;
                 }
 
@@ -79,7 +79,26 @@ namespace Zork.Builder
             }
         }
 
-        private void addButton_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveWorld();
+        }
+
+        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                ViewModel.Filename = saveFileDialog.FileName;
+                SaveWorld();
+            }
+        }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
         {
             using (AddRoomForm addRoomForm = new AddRoomForm())
             {
@@ -91,7 +110,7 @@ namespace Zork.Builder
             }
         }
 
-        private void deleteButton_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Delete this room?", AssemblyTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -100,34 +119,30 @@ namespace Zork.Builder
             }
         }
 
-        private void roomsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void RoomsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             deleteButton.Enabled = roomsListBox.SelectedItem != null;
+            
+            foreach (Room room in ViewModel.Rooms)
+            {
+                if (room.Neighbors != null)
+                {
+                    foreach (Directions direction in room.Neighbors.Keys)
+                    {
+                        if (room.Neighbors[direction].Name != room.NeighborNames[direction])
+                        {
+                            room.NeighborNames[direction] = room.Neighbors[direction].Name;
+                        }
+                    }
+                }
+            }
+            
             Room selectedRoom = roomsListBox.SelectedItem as Room;
             foreach (var control in _roomNeighborControlMap.Values)
             {
-                control.Rooms = new List<Room>(ViewModel.Rooms);
+                control.Game = ViewModel.Game;
                 control.Room = selectedRoom;
             }
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveWorld();
-        }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                ViewModel.Filename = saveFileDialog.FileName;
-                SaveWorld();
-            }
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         private void SaveWorld()
