@@ -136,6 +136,11 @@ namespace Zork.Builder
             }
         }
 
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveWorld();
