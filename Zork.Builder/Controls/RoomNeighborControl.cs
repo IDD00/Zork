@@ -46,6 +46,7 @@ namespace Zork
                             _room.Neighbors = new Dictionary<Directions, Room>();
                         }
                         
+
                         roomNeighborComboBox.SelectedIndexChanged += RoomNeighborComboBox_SelectedIndexChanged;
                     }
                     else
@@ -76,7 +77,6 @@ namespace Zork
         {
             InitializeComponent();
         }
-
         private void RoomNeighborComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_room != null)
@@ -126,10 +126,12 @@ namespace Zork
             }
         }
 
+        private Game _game;
+
         private static readonly Room NoNeighbor = new Room("None");
 
         private Directions _direction;
         private Room _room;
-        private Game _game;
+
     }
 }

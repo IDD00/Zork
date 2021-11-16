@@ -72,7 +72,7 @@ namespace Zork.Builder
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(308, 22);
             this.nameTextBox.TabIndex = 1;
-            this.nameTextBox.TextChanged += new System.EventHandler(this.NameTextBox_TextChanged);
+            this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
             // AddRoomForm
             // 

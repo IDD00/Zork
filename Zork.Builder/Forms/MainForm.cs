@@ -34,58 +34,13 @@ namespace Zork.Builder
 
         private bool IsGameLoaded
         {
-            get => _isGameLoaded;
+            get => _isGameLoaded; 
             set
             {
                 _isGameLoaded = value;
                 mainFormTabControl.Enabled = _isGameLoaded;
                 saveToolStripMenuItem.Enabled = _isGameLoaded;
                 saveAsToolStripMenuItem.Enabled = _isGameLoaded;
-            }
-        }
-
-        public string AssignedLocation
-        {
-            get => (string)startLocationComboBox.SelectedItem;
-            set => startLocationComboBox.SelectedItem = value;
-        }
-
-        public string StartLocation
-        {
-            get => _startLocation;
-            set
-            {
-                if (_startLocation != value)
-                {
-                    _startLocation = value;
-                }
-
-                if (_startLocation != null)
-                {
-                    var roomNames = new List<string>();
-                    foreach (Room room in ViewModel.Rooms)
-                    {
-                        roomNames.Add(room.Name);
-                    }
-                    roomNames.Insert(0, NoLocation);
-
-                    startLocationComboBox.SelectedIndexChanged -= StartLocationComboBox_SelectedIndexChanged;
-                    startLocationComboBox.DataSource = roomNames;
-
-                    AssignedLocation = _startLocation;
-
-                    startLocationComboBox.SelectedIndexChanged += StartLocationComboBox_SelectedIndexChanged;
-                }
-                else
-                {
-                    AssignedLocation = NoLocation;
-                    startLocationComboBox.DataSource = null;
-                }
-
-                if (_startLocation != value)
-                {
-                    _startLocation = value;
-                }
             }
         }
 
@@ -113,7 +68,6 @@ namespace Zork.Builder
                 ViewModel.Game = JsonConvert.DeserializeObject<Game>(File.ReadAllText(openFileDialog.FileName));
                 ViewModel.Filename = openFileDialog.FileName;
 
-                StartLocation = ViewModel.Game.World.StartingLocation;
                 Room selectedRoom = roomsListBox.SelectedItem as Room;
                 foreach (var control in _roomNeighborControlMap.Values)
                 {
@@ -168,39 +122,7 @@ namespace Zork.Builder
         private void RoomsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             deleteButton.Enabled = roomsListBox.SelectedItem != null;
-
-            UpdateNeighborNames();
-
-            Room selectedRoom = roomsListBox.SelectedItem as Room;
-            foreach (var control in _roomNeighborControlMap.Values)
-            {
-                control.Game = ViewModel.Game;
-                control.Room = selectedRoom;
-            }
-
             
-            string selectedLocation = startLocationComboBox.SelectedItem as string;
-            StartLocation = selectedLocation;
-        }
-
-        private void StartLocationComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_startLocation != null)
-            {
-                string assignedLocation = AssignedLocation;
-                if (assignedLocation == NoLocation)
-                {
-                    ViewModel.Game.World.StartingLocation = Empty;
-                }
-                else
-                {
-                    ViewModel.Game.World.StartingLocation = assignedLocation;
-                }
-            }
-        }
-
-        private void UpdateNeighborNames()
-        {
             foreach (Room room in ViewModel.Rooms)
             {
                 if (room.Neighbors != null)
@@ -214,12 +136,17 @@ namespace Zork.Builder
                     }
                 }
             }
+            
+            Room selectedRoom = roomsListBox.SelectedItem as Room;
+            foreach (var control in _roomNeighborControlMap.Values)
+            {
+                control.Game = ViewModel.Game;
+                control.Room = selectedRoom;
+            }
         }
 
         private void SaveWorld()
         {
-            UpdateNeighborNames();
-
             if (string.IsNullOrEmpty(ViewModel.Filename))
             {
                 throw new InvalidProgramException("Filename expected.");
@@ -236,13 +163,8 @@ namespace Zork.Builder
             }
         }
 
-        private static readonly string NoLocation = "None";
-        public static readonly string Empty = String.Empty;
-
         private GameViewModel _viewModel;
         private bool _isGameLoaded;
-        private string _startLocation;
         private readonly Dictionary<Directions, RoomNeighborControl> _roomNeighborControlMap;
-
     }
 }

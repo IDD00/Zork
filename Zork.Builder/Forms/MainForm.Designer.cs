@@ -171,7 +171,6 @@ namespace Zork.Builder
             this.startLocationComboBox.Name = "startLocationComboBox";
             this.startLocationComboBox.Size = new System.Drawing.Size(300, 24);
             this.startLocationComboBox.TabIndex = 5;
-            this.startLocationComboBox.SelectedIndexChanged += new System.EventHandler(this.StartLocationComboBox_SelectedIndexChanged);
             // 
             // startLocationLabel
             // 
@@ -214,7 +213,6 @@ namespace Zork.Builder
             // 
             this.downRoomNeighborControl.AssignedNeighbor = null;
             this.downRoomNeighborControl.Direction = Zork.Directions.DOWN;
-            this.downRoomNeighborControl.Game = null;
             this.downRoomNeighborControl.Location = new System.Drawing.Point(200, 206);
             this.downRoomNeighborControl.Name = "downRoomNeighborControl";
             this.downRoomNeighborControl.Room = null;
@@ -226,7 +224,6 @@ namespace Zork.Builder
             // 
             this.upRoomNeighborControl.AssignedNeighbor = null;
             this.upRoomNeighborControl.Direction = Zork.Directions.UP;
-            this.upRoomNeighborControl.Game = null;
             this.upRoomNeighborControl.Location = new System.Drawing.Point(32, 206);
             this.upRoomNeighborControl.Name = "upRoomNeighborControl";
             this.upRoomNeighborControl.Room = null;
@@ -238,7 +235,6 @@ namespace Zork.Builder
             // 
             this.westRoomNeighborControl.AssignedNeighbor = null;
             this.westRoomNeighborControl.Direction = Zork.Directions.WEST;
-            this.westRoomNeighborControl.Game = null;
             this.westRoomNeighborControl.Location = new System.Drawing.Point(200, 121);
             this.westRoomNeighborControl.Name = "westRoomNeighborControl";
             this.westRoomNeighborControl.Room = null;
@@ -250,7 +246,6 @@ namespace Zork.Builder
             // 
             this.eastRoomNeighborControl.AssignedNeighbor = null;
             this.eastRoomNeighborControl.Direction = Zork.Directions.EAST;
-            this.eastRoomNeighborControl.Game = null;
             this.eastRoomNeighborControl.Location = new System.Drawing.Point(32, 121);
             this.eastRoomNeighborControl.Name = "eastRoomNeighborControl";
             this.eastRoomNeighborControl.Room = null;
@@ -262,7 +257,6 @@ namespace Zork.Builder
             // 
             this.southRoomNeighborControl.AssignedNeighbor = null;
             this.southRoomNeighborControl.Direction = Zork.Directions.SOUTH;
-            this.southRoomNeighborControl.Game = null;
             this.southRoomNeighborControl.Location = new System.Drawing.Point(200, 35);
             this.southRoomNeighborControl.Name = "southRoomNeighborControl";
             this.southRoomNeighborControl.Room = null;
@@ -274,7 +268,6 @@ namespace Zork.Builder
             // 
             this.northRoomNeighborControl.AssignedNeighbor = null;
             this.northRoomNeighborControl.Direction = Zork.Directions.NORTH;
-            this.northRoomNeighborControl.Game = null;
             this.northRoomNeighborControl.Location = new System.Drawing.Point(32, 35);
             this.northRoomNeighborControl.Name = "northRoomNeighborControl";
             this.northRoomNeighborControl.Room = null;
