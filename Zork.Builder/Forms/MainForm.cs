@@ -41,6 +41,7 @@ namespace Zork.Builder
                 mainFormTabControl.Enabled = _isGameLoaded;
                 saveToolStripMenuItem.Enabled = _isGameLoaded;
                 saveAsToolStripMenuItem.Enabled = _isGameLoaded;
+                deleteButton.Enabled = roomsListBox.SelectedItem != null && _isGameLoaded;
             }
         }
 
@@ -106,6 +107,16 @@ namespace Zork.Builder
             };
         }
 
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            World _world = new World();
+            _world.StartingLocation = NoLocation;
+            ViewModel.Game = new Game(_world, _world.SpawnPlayer());
+            StartLocation = ViewModel.Game.World.StartingLocation;
+
+            IsGameLoaded = true;
+        }
+
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -152,6 +163,13 @@ namespace Zork.Builder
                 {
                     Room room = new Room(addRoomForm.RoomName);
                     ViewModel.Rooms.Add(room);
+
+                    if (ViewModel.Rooms.Count == 1)
+                    {
+                        RoomsListBox_SelectedIndexChanged(sender, e);
+                    }
+
+                    roomsListBox.SelectedItem = ViewModel.Rooms.LastOrDefault();
                 }
             }
         }
@@ -243,6 +261,5 @@ namespace Zork.Builder
         private bool _isGameLoaded;
         private string _startLocation;
         private readonly Dictionary<Directions, RoomNeighborControl> _roomNeighborControlMap;
-
     }
 }
