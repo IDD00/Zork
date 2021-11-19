@@ -39,6 +39,7 @@ namespace Zork.Builder
             {
                 _isGameLoaded = value;
                 mainFormTabControl.Enabled = _isGameLoaded;
+                closeToolStripMenuItem.Enabled = _isGameLoaded;
                 saveToolStripMenuItem.Enabled = _isGameLoaded;
                 saveAsToolStripMenuItem.Enabled = _isGameLoaded;
                 deleteButton.Enabled = roomsListBox.SelectedItem != null && _isGameLoaded;
@@ -138,12 +139,20 @@ namespace Zork.Builder
 
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Restart();
+            ViewModel.Game = null;
+            IsGameLoaded = false;
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveWorld();
+            if (ViewModel.Filename != null)
+            {
+                SaveWorld();
+            }
+            else
+            {
+                saveAsToolStripMenuItem.PerformClick();
+            }
         }
 
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
