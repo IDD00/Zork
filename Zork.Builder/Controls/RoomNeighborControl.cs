@@ -43,7 +43,7 @@ namespace Zork
                         else
                         {
                             _room.NeighborNames = new Dictionary<Directions, string>();
-                            _room.Neighbors = new Dictionary<Directions, Room>();
+                            //_room.Neighbors = new Dictionary<Directions, Room>();
                         }
                         
                         roomNeighborComboBox.SelectedIndexChanged += RoomNeighborComboBox_SelectedIndexChanged;

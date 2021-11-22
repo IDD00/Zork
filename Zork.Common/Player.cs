@@ -1,34 +1,78 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Zork
 {
-    public class Player : INotifyPropertyChanged
+    public class Player
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<Room> LocationChanged;
+
+        public event EventHandler<int> MovesChanged;
+
+        public event EventHandler<int> ScoreChanged;
 
         public World World { get; }
 
         [JsonIgnore]
-        public Room Location { get; set; }
-
-        public string LocationName
+        public Room Location
         {
-            get
+            get => _location;
+            private set
             {
-                return Location?.Name;
+                if (_location != value)
+                {
+                    _location = value;
+                    LocationChanged?.Invoke(this, _location);
+                }
             }
+        }
+
+        [JsonIgnore]
+        public int Score
+        {
+            get => _score;
             set
             {
-                Location = World?.RoomsByName.GetValueOrDefault(value);
+                if (_score != value)
+                {
+                    _score = value;
+                    ScoreChanged?.Invoke(this, _score);
+                }
+            }
+        }
+
+        [JsonIgnore]
+        public int Moves
+        {
+            get => _moves;
+            set
+            {
+                if (_moves != value)
+                {
+                    _moves = value;
+                    MovesChanged?.Invoke(this, _moves);
+                }
             }
         }
 
         public Player(World world, string startingLocation)
         {
+            Assert.IsTrue(world != null);
+
+            if (world.RoomsByName.Count != 0)
+            {
+                Assert.IsTrue(world.RoomsByName.ContainsKey(startingLocation));
+            }
+
             World = world;
-            LocationName = startingLocation;
+
+            if (world.RoomsByName.Count != 0)
+            {
+                Location = world.RoomsByName[startingLocation];
+            }
+
+            Score = 0;
+            Moves = 0;
         }
 
         public bool Move(Directions direction)
@@ -42,7 +86,8 @@ namespace Zork
             return isValidMove;
         }
 
-        public int Score = 0;
-        public int Moves = 0;
+        private Room _location;
+        private int _score;
+        private int _moves;
     }
 }

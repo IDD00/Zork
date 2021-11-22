@@ -99,21 +99,23 @@ namespace Zork.Builder
 
             _roomNeighborControlMap = new Dictionary<Directions, RoomNeighborControl>
             {
-                {Directions.NORTH, northRoomNeighborControl },
-                {Directions.SOUTH, southRoomNeighborControl },
-                {Directions.EAST, eastRoomNeighborControl },
-                {Directions.WEST, westRoomNeighborControl },
-                {Directions.UP, upRoomNeighborControl },
-                {Directions.DOWN, downRoomNeighborControl }
+                {Directions.North, northRoomNeighborControl },
+                {Directions.South, southRoomNeighborControl },
+                {Directions.East, eastRoomNeighborControl },
+                {Directions.West, westRoomNeighborControl },
+                {Directions.Up, upRoomNeighborControl },
+                {Directions.Down, downRoomNeighborControl }
             };
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             World _world = new World();
-            _world.StartingLocation = NoLocation;
-            ViewModel.Game = new Game(_world, _world.SpawnPlayer());
-            StartLocation = ViewModel.Game.World.StartingLocation;
+            Player _player = new Player(_world, NoLocation);
+
+            ViewModel.Game = new Game(_world, _player);
+            ViewModel.Game.StartingLocation = NoLocation;
+            StartLocation = ViewModel.Game.StartingLocation;
 
             IsGameLoaded = true;
         }
@@ -125,7 +127,7 @@ namespace Zork.Builder
                 ViewModel.Game = JsonConvert.DeserializeObject<Game>(File.ReadAllText(openFileDialog.FileName));
                 ViewModel.Filename = openFileDialog.FileName;
 
-                StartLocation = ViewModel.Game.World.StartingLocation;
+                StartLocation = ViewModel.Game.StartingLocation;
                 Room selectedRoom = roomsListBox.SelectedItem as Room;
                 foreach (var control in _roomNeighborControlMap.Values)
                 {
@@ -222,11 +224,11 @@ namespace Zork.Builder
                 string assignedLocation = AssignedLocation;
                 if (assignedLocation == NoLocation)
                 {
-                    ViewModel.Game.World.StartingLocation = Empty;
+                    ViewModel.Game.StartingLocation = Empty;
                 }
                 else
                 {
-                    ViewModel.Game.World.StartingLocation = assignedLocation;
+                    ViewModel.Game.StartingLocation = assignedLocation;
                 }
             }
         }

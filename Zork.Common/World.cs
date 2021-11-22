@@ -10,22 +10,21 @@ namespace Zork
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public World()
-        {
-            Rooms = new List<Room>();
-        }
-
         public List<Room> Rooms { get; set; }
 
         [JsonIgnore]
-        public Dictionary<string, Room> RoomsByName => mRoomsByName;
+        public IReadOnlyDictionary<string, Room> RoomsByName => _roomsByName;
 
-        public Player SpawnPlayer() => new Player(this, StartingLocation);
+        public World()
+        {
+            Rooms = new List<Room>();
+            _roomsByName = new Dictionary<string, Room>();
+        }
 
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {
-            mRoomsByName = Rooms.ToDictionary(room => room.Name, room => room);
+            _roomsByName = Rooms.ToDictionary(room => room.Name, room => room);
 
             foreach (Room room in Rooms)
             {
@@ -33,9 +32,6 @@ namespace Zork
             }
         }
 
-        [JsonProperty]
-        public string StartingLocation { get; set; }
-
-        private Dictionary<string, Room> mRoomsByName;
+        private Dictionary<string, Room> _roomsByName;
     }
 }

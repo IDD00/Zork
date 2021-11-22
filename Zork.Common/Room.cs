@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace Zork
 {
     public class Room : IEquatable<Room>, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public Room(string roomName)
-        {
-            Name = roomName;
-            Description = "[Insert Description Here]";
-        }
 
         [JsonProperty(Order = 1)]
         public string Name { get; set; }
@@ -23,10 +16,16 @@ namespace Zork
         public string Description { get; set; }
 
         [JsonProperty(PropertyName = "Neighbors", Order = 3)]
-        public Dictionary<Directions, string> NeighborNames { get; set; }
+        public Dictionary<Directions, string> NeighborNames { get; set; } = new Dictionary<Directions, string>();
 
         [JsonIgnore]
-        public Dictionary<Directions, Room> Neighbors { get; set; }
+        public Dictionary<Directions, Room> Neighbors => _neighbors;
+
+        public Room(string name = null)
+        {
+            Name = name;
+            Description = "[Insert Description Here]";
+        }
 
         public static bool operator ==(Room lhs, Room rhs)
         {
@@ -40,12 +39,12 @@ namespace Zork
                 return false;
             }
 
-            return lhs.Name == rhs.Name;
+            return string.Compare(lhs.Name, rhs.Name, ignoreCase: true) == 0;
         }
 
         public static bool operator !=(Room lhs, Room rhs) => !(lhs == rhs);
 
-        public override bool Equals(object obj) => obj is Room room ? this == room : false;
+        public override bool Equals(object obj) => obj is Room room && this == room;
 
         public bool Equals(Room other) => this == other;
 
@@ -53,17 +52,27 @@ namespace Zork
 
         public override int GetHashCode() => Name.GetHashCode();
 
-        public void UpdateNeighbors(World world) => Neighbors = (from entry in NeighborNames
-                                                                 let room = world.RoomsByName.GetValueOrDefault(entry.Value)
-                                                                 where room != null
-                                                                 select (Direction: entry.Key, Room: room))
-                                                                 .ToDictionary(pair => pair.Direction, pair => pair.Room);
+        public void UpdateNeighbors(World world)
+        {
+            _neighbors.Clear();
+            foreach (var entry in NeighborNames)
+            {
+                _neighbors.Add(entry.Key, world.RoomsByName[entry.Value]);
+            }
+        }
 
-        /*
-         * public void UpdateNeighbors(World world)
-         * {
-         * 
-         * }
-         */
+        public void RemoveNeighbor(Directions direction)
+        {
+            _neighbors.Remove(direction);
+            NeighborNames.Remove(direction);
+        }
+
+        public void AssignNeighbor(Directions direction, Room neighbor)
+        {
+            _neighbors[direction] = neighbor;
+            NeighborNames[direction] = neighbor.Name;
+        }
+
+        private Dictionary<Directions, Room> _neighbors = new Dictionary<Directions, Room>();
     }
 }
